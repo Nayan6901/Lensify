@@ -1,17 +1,30 @@
+import e from "express";
 import mongoose from "mongoose";
 const categorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      default: "",
+      required: [true, "Category name is required"],
+    },
+    description: {
+      type: String,
+      required: [true, "Category description is required"],
     },
     image: {
-      type: string,
-      default: [],
+      type: String,
+      required: [true, "Category image is required"],
+    },
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
+    },
+    parentCategory: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Category",
+      default: null,
     },
   },
   { timestamps: true }
 );
-
-const CategoryModel = mongoose.model("Category", categorySchema);
-export default CategoryModel;
+export default mongoose.model("Category", categorySchema);

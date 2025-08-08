@@ -1,24 +1,29 @@
 import mongoose from "mongoose";
-
-const subcategorySchema = new mongoose.Schema(
+const SubcategorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      default: "",
+      required: [true, "Subcategory name is required"],
+    },
+    description: {
+      type: String,
+      required: [true, "Subcategory description is required"],
     },
     image: {
       type: String,
-      default: "",
+      required: [true, "Subcategory image is required"],
     },
-    category: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "Category",
-      },
-    ],
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
+    },
+    parentCategory: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Category",
+      required: [true, "Parent category is required"],
+    },
   },
   { timestamps: true }
 );
-
-const SubCategoryModel = mongoose.model("SubCategory", subcategorySchema);
-export default SubCategoryModel;
+export default mongoose.model("Subcategory", SubcategorySchema);

@@ -1,60 +1,103 @@
-import mongoose, { Schema } from "mongoose";
-const productSchema = new mongoose.Schema(
+import mongoose from "mongoose";
+const productschema = new mongoose.Schema(
   {
     name: {
       type: String,
-    },
-    image: {
-      type: Array,
-      default: [],
-    },
-    category: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "Category",
-      },
-    ],
-    subcategory: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "SubCategory",
-      },
-    ],
-    unit: {
-      type: String,
-      default: null,
-    },
-    stock: {
-      type: Number,
-      default: 0,
-    },
-    price: {
-      type: Number,
-      default: 0,
-    },
-    discount: {
-      type: Number,
-      default: 0,
+      required: [true, "Product name is required"],
     },
     description: {
       type: String,
-      default: null,
+      required: [true, "Product description is required"],
     },
-    more_details: {
-      type: Object,
-      default: {},
+
+    brand: {
+      type: String,
+      required: [true, "Product brand is required"],
     },
-    rating: {
+    sku: {
+      //unique code for the product
+      type: String,
+      required: [true, "Product SKU is required"],
+    },
+    category: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Category",
+      required: [true, "Product category is required"],
+    },
+    stock: {
+      type: Number,
+      required: [true, "Product stock is required"],
+    },
+    images: {
+      type: [String],
+      required: [true, "Product images are required"],
+    },
+    subcategory: {
+      type: mongoose.Schema.ObjectId,
+      ref: "SubCategory",
+      required: [true, "Product subcategory is required"],
+    },
+    lensType: {
+      type: [String],
+      required: [true, "Lens type is required"],
+    },
+    currentPrice: {
+      type: Number,
+      required: [true, "Product price is required"],
+    },
+    originalPrice: {
+      type: Number,
+      required: [true, "Original price is required"],
+    },
+    frameType: {
+      type: String,
+      required: [true, "Frame type is required"],
+    },
+    frameColors: {
+      type: [String],
+      required: [true, "Frame colors are required"],
+    },
+    material: {
+      type: String,
+      required: [true, "Material is required"],
+    },
+    tags: {
+      type: [String],
+      required: [true, "Product tags are required"],
+    },
+    ratings: {
       type: Number,
       default: 0,
+      min: 0,
+      max: 5,
     },
-    punlish: {
-      type: Boolean,
-      default: true,
+    reviews: [
+      {
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+          required: [true, "User ID is required for reviews"],
+        },
+        comment: {
+          type: String,
+          required: [true, "Review comment is required"],
+        },
+        rating: {
+          type: Number,
+          min: 0,
+          max: 5,
+          required: [true, "Review rating is required"],
+        },
+      },
+    ],
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
     },
   },
   { timestamps: true }
 );
 
-const productModel = mongoose.model("Product", productSchema);
+const productModel = mongoose.model("Product", productschema);
 export default productModel;

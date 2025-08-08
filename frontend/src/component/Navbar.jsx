@@ -6,7 +6,6 @@ import {
   ShoppingCartIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import menImg from "../assets/photos/men.jpg";
 import womenImg from "../assets/photos/women.jpg";
@@ -59,17 +58,7 @@ export default function Navbar({ isAuthenticated }) {
   return (
     <nav className=" flex justify-between items-center px-6 py-2 bg-white shadow sticky top-0 z-50">
       {/* Left: Logo */}
-      <div className="md:hidden">
-        {mobileMenuOpen ? (
-          <button onClick={() => setMobileMenuOpen(false)}>
-            <XMarkIcon className="w-6 h-6" />
-          </button>
-        ) : (
-          <button onClick={() => setMobileMenuOpen(true)}>
-            <Bars3Icon className="w-6 h-6" />
-          </button>
-        )}
-      </div>
+
       <div className="flex-shrink-0">
         <h1 className="font-semibold text-2xl p-2">Lensify</h1>
       </div>
