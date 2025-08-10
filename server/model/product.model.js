@@ -20,8 +20,8 @@ const productschema = new mongoose.Schema(
       required: [true, "Product SKU is required"],
     },
     category: {
-      type: mongoose.Schema.ObjectId,
-      ref: "Category",
+      type: String, // mongoose.Schema.ObjectId,temporary for testing
+      // ref: "Category",
       required: [true, "Product category is required"],
     },
     stock: {
@@ -33,8 +33,8 @@ const productschema = new mongoose.Schema(
       required: [true, "Product images are required"],
     },
     subcategory: {
-      type: mongoose.Schema.ObjectId,
-      ref: "SubCategory",
+      type: String, //mongoose.Schema.ObjectId, temporary for testing
+      // ref: "SubCategory",
       required: [true, "Product subcategory is required"],
     },
     lensType: {

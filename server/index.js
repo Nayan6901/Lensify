@@ -8,7 +8,9 @@ import helmet from "helmet";
 import connectDB from "./config/connectDB.js";
 import userRouter from "./route/user.route.js";
 import axios from "axios";
-
+import productRouter from "./route/product.route.js";
+import categoryRouter from "./route/category.route.js";
+import subcategoryRouter from "./route/subcategory.route.js";
 
 const app = express();
 app.use(
@@ -40,3 +42,6 @@ connectDB().then(() => {
   });
 });
 app.use("/api/user", userRouter);
+app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/subcategories", subcategoryRouter);
