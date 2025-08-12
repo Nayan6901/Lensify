@@ -146,3 +146,51 @@ export async function updateitemquntity(req, res) {
     });
   }
 }
+export async function deleteItemFromCart(req, res) {
+  try {
+    const { userId } = req.params;
+    const { productId } = req.body;
+
+    if (!userId || !productId) {
+      return res.status(400).json({
+        message: "User ID and Product ID are required",
+        success: false,
+      });
+    }
+
+    const cart = await cartModel.findOne({ user: userId });
+    if (!cart) {
+      return res.status(404).json({
+        message: "Cart not found",
+        success: false,
+      });
+    }
+
+    cart.items = cart.items.filter(
+      (item) => item.product.toString() !== productId
+    );
+
+    // Recalculate total price
+    let totalPrice = 0;
+    for (const item of cart.items) {
+      const product = await productModel.findById(item.product);
+      if (product) {
+        totalPrice += product.currentPrice * item.quantity;
+      }
+    }
+    cart.totalPrice = totalPrice;
+
+    await cart.save();
+    res.status(200).json({
+      message: "Item removed from cart",
+      success: true,
+      cart,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+      success: false,
+    });
+  }
+}
